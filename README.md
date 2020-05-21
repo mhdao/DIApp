@@ -15,19 +15,19 @@ Purpose of this application is illustrating how DI works, It doesn't support ful
 
 ## How to use
 ### Inject singleton bean
-     @Inject(value = BeanScope.SINGLETON)
-     public Singleton(CarService carService) {
+    @Inject(value = BeanScope.SINGLETON)
+    public CarServiceSingleton(CarService carService) {
         this.carService = carService;
-     }
+    }
      
-     CarService bean should be injected by DI and return the same instance for every time.
+    CarService bean should be injected by DI and return the same instance for every time.
 ### Inject prototype bean
-     @Inject(value = BeanScope.PROTOTYPE)
-     public Prototype(PlaneService planeService) {
-         this.planeService = planeService;
-     }
+    @Inject(value = BeanScope.PROTOTYPE)
+    public PlaneServicePrototype(PlaneService planeService) {
+        this.planeService = planeService;
+    }
      
-     PlaneService bean should be injected by DI and return the different instance for each time
+    PlaneService bean should be injected by DI and return the different instance for each time
      
 ### Build and run
     + mvn clean install
