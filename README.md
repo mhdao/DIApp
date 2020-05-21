@@ -1,4 +1,4 @@
-# A DI's implementation application
+# The DI's implementation application
 
 ## Functionality
  - Support spring bean scopes singleton and prototype
