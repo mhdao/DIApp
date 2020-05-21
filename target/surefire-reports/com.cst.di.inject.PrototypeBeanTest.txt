@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.cst.di.inject.PrototypeBeanTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.013 sec <<< FAILURE!
+com.cst.di.inject.PrototypeBeanTest.testPrototypeBean_should_getMultipleInstances()  Time elapsed: 0.011 sec  <<< FAILURE!
+java.lang.NullPointerException
+	at com.cst.di.inject.PrototypeBeanTest.testPrototypeBean_should_getMultipleInstances(PrototypeBeanTest.java:25)
+

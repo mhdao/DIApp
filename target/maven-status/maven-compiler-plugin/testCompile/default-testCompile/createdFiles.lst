@@ -1,0 +1,4 @@
+com\cst\di\inject\PrototypeBeanTest.class
+com\cst\di\mapping\AbstractMappingTest.class
+com\cst\di\mapping\MappingTest.class
+com\cst\di\inject\SingletonBeanTest.class
