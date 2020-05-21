@@ -1,63 +1,87 @@
 package com.cst.di.inject;
 
-import com.cst.di.mapper.IMapper;
-import com.cst.di.scope.BeanScope;
-
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cst.di.mapper.IMapper;
+import com.cst.di.scope.BeanScope;
+
 public class InjectHandler {
 
-    private Map<Class<?>, Object> singletonInstanceMap = new HashMap<>();
-    private IMapper mapper;
+	private Map<Class<?>, Object> singletonInstanceMap = new HashMap<>();
+	private Map<Class<?>, IMapper> mappers = new HashMap<>();
+	private static InjectHandler instance = new InjectHandler();
 
-    public InjectHandler(IMapper mapper) {
-        this.mapper = mapper;
-    }
+	private InjectHandler() {
+	}
 
-    public Object getInstance(Class<?> clazz) {
-		Class<?> subClazz = mapper.getMapping(clazz);
-        return singletonInstanceMap.get(subClazz);
-    }
+	public void addMapper(IMapper mapper) {
+		if (!mappers.containsKey(mapper.getClass())) {
+			mapper.configure();
+			mappers.put(mapper.getClass(), mapper);
+		}
+	}
 
-    public Object injectInstance(Class<?> clazz) throws Exception {
+	public static InjectHandler getInstance() {
+		return instance;
+	}
 
-        if (clazz != null) {
+	public Object getInjectionInstance(Class<?> clazz) {
+		IMapper mapper = getMapper(clazz);
+		if (mapper != null) {
+			Class<?> subClazz = mapper.getMapping(clazz);
+			return singletonInstanceMap.get(subClazz);
+		}
+		return null;
+	}
 
-            for (Constructor<?> constructor : clazz.getConstructors()) {
-                if (constructor.isAnnotationPresent(Inject.class)) {
-                    Inject annotation = (Inject) constructor.getAnnotation(Inject.class);
-                    BeanScope injectValue = annotation.value();
+	private IMapper getMapper(Class<?> clazz) {
+		for (IMapper mapper : mappers.values()) {
+			if (mapper.getMapping(clazz) != null) {
+				return mapper;
+			}
+		}
+		throw new IllegalArgumentException("Couldn't find the mapping for : " + clazz);
+	}
 
-                    Class<?>[] parameterTypes = constructor.getParameterTypes();
-                    Object[] objArr = new Object[parameterTypes.length];
+	public Object injectInstance(Class<?> clazz) throws Exception {
 
-                    int i = 0;
+		if (clazz != null) {
 
-                    for (Class<?> c : parameterTypes) {
-                        Class<?> dependency = mapper.getMapping(c);
+			for (Constructor<?> constructor : clazz.getConstructors()) {
+				if (constructor.isAnnotationPresent(Inject.class)) {
+					Inject annotation = (Inject) constructor.getAnnotation(Inject.class);
+					BeanScope injectValue = annotation.value();
 
-                        if (c.isAssignableFrom(dependency)) {
-                            objArr[i] = dependency.getConstructor().newInstance();
+					Class<?>[] parameterTypes = constructor.getParameterTypes();
+					Object[] objArr = new Object[parameterTypes.length];
 
-                            if (injectValue == BeanScope.SINGLETON && singletonInstanceMap.containsKey(dependency)) {
-                                objArr[i] = singletonInstanceMap.get(dependency);
-                            }
-                            singletonInstanceMap.put(dependency, objArr[i]);
+					int i = 0;
 
-                            i++;
-                        }
-                    }
+					for (Class<?> c : parameterTypes) {
+						Class<?> dependency = getMapper(c).getMapping(c);
 
-                    Object resObj = clazz.getConstructor(parameterTypes).newInstance(objArr);
+						if (c.isAssignableFrom(dependency)) {
+							objArr[i] = dependency.getConstructor().newInstance();
 
-                    return resObj;
-                }
-            }
-        }
+							if (injectValue == BeanScope.SINGLETON && singletonInstanceMap.containsKey(dependency)) {
+								objArr[i] = singletonInstanceMap.get(dependency);
+							}
+							singletonInstanceMap.put(dependency, objArr[i]);
 
-        return null;
-    }
+							i++;
+						}
+					}
+
+					Object resObj = clazz.getConstructor(parameterTypes).newInstance(objArr);
+
+					return resObj;
+				}
+			}
+		}
+
+		return null;
+	}
 
 }

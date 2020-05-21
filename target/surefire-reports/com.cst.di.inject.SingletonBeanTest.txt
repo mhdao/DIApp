@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.cst.di.inject.SingletonBeanTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.002 sec <<< FAILURE!
-com.cst.di.inject.SingletonBeanTest.testSingletonBean_should_getSameInstance()  Time elapsed: 0 sec  <<< FAILURE!
-java.lang.NullPointerException
-	at com.cst.di.inject.SingletonBeanTest.testSingletonBean_should_getSameInstance(SingletonBeanTest.java:26)
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec

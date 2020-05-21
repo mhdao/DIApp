@@ -16,9 +16,9 @@ public abstract class Mapper implements IMapper {
     public <T> Class<? extends T> getMapping(Class<T> type) {
         Class<?> implementation = classMap.get(type);
 
-        if (implementation == null)
-            throw new IllegalArgumentException("Couldn't find the mapping for : " + type);
-
-        return implementation.asSubclass(type);
+        if (implementation != null) {
+        	return implementation.asSubclass(type);
+        }
+        return null; 
     }
 }

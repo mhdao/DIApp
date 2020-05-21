@@ -37,28 +37,30 @@ Purpose of this application is illustrating how DI works, It doesn't support ful
 
 ### Test inject singleton Bean
 
-    @Test
-    public void testSingletonBean_should_getSameInstance() throws Exception {
-        injectHandler.injectInstance(CarServiceSingleton.class);
-        Object carService1 = injectHandler.getInstance(CarService.class);
+	@Test
+	public void testSingletonBean_should_getSameInstance() throws Exception {
+		injectHandler.addMapper(mapperTest);
+		injectHandler.injectInstance(CarServiceSingleton.class);
+		Object carService1 = injectHandler.getInjectionInstance(CarService.class);
 
-        injectHandler.injectInstance(CarServiceSingleton.class);
-        Object carService2 = injectHandler.getInstance(CarService.class);
+		injectHandler.injectInstance(CarServiceSingleton.class);
+		Object carService2 = injectHandler.getInjectionInstance(CarService.class);
 
-        Assertions.assertEquals(carService1, carService2);
-    }
+		Assertions.assertEquals(carService1, carService2);
+	}
 ### Test inject prototype Bean
 
-    @Test
-    public void testPrototypeBean_should_getMultipleInstances() throws Exception {
-        injectHandler.injectInstance(PlaneServicePrototype.class);
-        Object planeService1 = injectHandler.getInstance(PlaneService.class);
+	@Test
+	public void testPrototypeBean_should_getMultipleInstances() throws Exception {
+		injectHandler.addMapper(mapperTest);
+		injectHandler.injectInstance(PlaneServicePrototype.class);
+		Object planeService1 = injectHandler.getInjectionInstance(PlaneService.class);
 
-        injectHandler.injectInstance(PlaneServicePrototype.class);
-        Object planeService2 = injectHandler.getInstance(PlaneService.class);
+		injectHandler.injectInstance(PlaneServicePrototype.class);
+		Object planeService2 = injectHandler.getInjectionInstance(PlaneService.class);
 
-        Assertions.assertNotEquals(planeService1, planeService2);
-    }
+		Assertions.assertNotEquals(planeService1, planeService2);
+	}
 
       
     

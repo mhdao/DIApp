@@ -2,7 +2,6 @@ package com.cst.di;
 
 import com.cst.di.bean.CarServiceSingleton;
 import com.cst.di.bean.PlaneServicePrototype;
-import com.cst.di.inject.InjectFactory;
 import com.cst.di.inject.InjectHandler;
 import com.cst.di.mapper.ServiceMapper;
 
@@ -10,8 +9,9 @@ import com.cst.di.mapper.ServiceMapper;
 public class DIApplication {
 
     public static void main(String[] args) throws Exception {
-        InjectHandler injectHandler = InjectFactory.getInject(new ServiceMapper());
-
+        InjectHandler injectHandler = InjectHandler.getInstance();
+        injectHandler.addMapper(new ServiceMapper());
+        
         // check the singleton instance, should be the same for 2 time
         System.out.println("Singleton instance for CarServiceImpl:");
         CarServiceSingleton singletonCar = (CarServiceSingleton) injectHandler.injectInstance(CarServiceSingleton.class);
