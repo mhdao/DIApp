@@ -44,16 +44,16 @@ public class DIApplication {
         
         System.out.println("Singleton with Method and Field injection instances for PlaneServiceImpl:");
         
-        FieldInjectSingleton prototypePlane4 = (FieldInjectSingleton) injectHandler.injectInstanceByField(FieldInjectSingleton.class);
-        prototypePlane4.fly();
+        FieldInjectSingleton singletonPlane4 = (FieldInjectSingleton) injectHandler.injectInstanceByField(FieldInjectSingleton.class);
+        singletonPlane4.fly();
         
-        prototypePlane4 = (FieldInjectSingleton) injectHandler.injectInstanceByField(FieldInjectSingleton.class);
-        prototypePlane4.fly();
+        singletonPlane4 = (FieldInjectSingleton) injectHandler.injectInstanceByField(FieldInjectSingleton.class);
+        singletonPlane4.fly();
         
-        MethodInjectSingleton prototypePlane5 = (MethodInjectSingleton) injectHandler.injectInstanceByMethod(MethodInjectSingleton.class);
-        prototypePlane5.fly();
+        MethodInjectSingleton singletonPlane5 = (MethodInjectSingleton) injectHandler.injectInstanceByMethod(MethodInjectSingleton.class);
+        singletonPlane5.fly();
         
-        prototypePlane5 = (MethodInjectSingleton) injectHandler.injectInstanceByMethod(MethodInjectSingleton.class);
-        prototypePlane5.fly();
+        singletonPlane5 = (MethodInjectSingleton) injectHandler.injectInstanceByMethod(MethodInjectSingleton.class);
+        singletonPlane5.fly();
     }
 }
