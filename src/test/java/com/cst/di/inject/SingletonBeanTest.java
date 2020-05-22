@@ -15,10 +15,10 @@ public class SingletonBeanTest {
 	@Test
 	public void testSingletonBean_should_getSameInstance() throws Exception {
 		injectHandler.addMapper(mapperTest);
-		injectHandler.injectInstance(CarServiceSingleton.class);
+		injectHandler.injectInstanceByContructor(CarServiceSingleton.class);
 		Object carService1 = injectHandler.getInjectionInstance(CarService.class);
 
-		injectHandler.injectInstance(CarServiceSingleton.class);
+		injectHandler.injectInstanceByContructor(CarServiceSingleton.class);
 		Object carService2 = injectHandler.getInjectionInstance(CarService.class);
 
 		Assertions.assertEquals(carService1, carService2);

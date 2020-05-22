@@ -2,7 +2,7 @@
 
 ## Functionality
  - Support spring bean scopes singleton and prototype
- - Inject dependency via constructor
+ - Inject dependency via constructor, field and method
   
 ## Class design
  - Inject: an annotation class support to inject dependency, default bean scope is SINGLETON 
@@ -11,24 +11,50 @@
  - BeanScope: an Enum class specify bean scope SINGLETON and PROTOTYPE.
 
 ## Limitation
-Purpose of this application is illustrating how DI works, It doesn't support fully feature of DI functions, only support injection dependency with spring bean scopes singleton and prototype via constructor. 
+Purpose of this application is illustrating how DI works, It doesn't support fully feature of DI functions, support injection dependency with spring bean scopes singleton and prototype via constructor, field and method. 
 
 ## How to use
-### Inject singleton bean
+### Inject singleton bean via constructor
     @Inject(value = BeanScope.SINGLETON)
     public CarServiceSingleton(CarService carService) {
         this.carService = carService;
     }
      
     CarService bean should be injected by DI and return the same instance for every time.
-### Inject prototype bean
+    
+### Inject singleton bean via field
+	 @Inject
+	 private PlaneService planeService;
+     
+    CarService bean should be injected by DI and return the same instance for every time.
+    
+### Inject singleton bean via method
+    @Inject
+    public void setPlaneService(PlaneService planeService) {
+        this.planeService = planeService;
+    }
+	
+### Inject prototype bean via constructor
     @Inject(value = BeanScope.PROTOTYPE)
     public PlaneServicePrototype(PlaneService planeService) {
         this.planeService = planeService;
     }
+    PlaneService bean should be injected by DI and return the different instance for each time
+    
+### Inject prototype bean via field
+    @Inject(value = BeanScope.PROTOTYPE)
+    private PlaneService planeService;
      
     PlaneService bean should be injected by DI and return the different instance for each time
+    
+### Inject prototype bean via method
+    @Inject(value = BeanScope.PROTOTYPE)
+    public void setPlaneService(PlaneService planeService) {
+        this.planeService = planeService;
+    }
      
+    PlaneService bean should be injected by DI and return the different instance for each time
+
 ### Build and run
     + mvn clean install
     + java -jar DIApp-1.0-SNAPSHOT.jar

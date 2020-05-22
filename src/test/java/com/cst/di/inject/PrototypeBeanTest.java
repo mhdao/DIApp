@@ -14,10 +14,10 @@ public class PrototypeBeanTest {
 	@Test
 	public void testPrototypeBean_should_getMultipleInstances() throws Exception {
 		injectHandler.addMapper(mapperTest);
-		injectHandler.injectInstance(PlaneServicePrototype.class);
+		injectHandler.injectInstanceByContructor(PlaneServicePrototype.class);
 		Object planeService1 = injectHandler.getInjectionInstance(PlaneService.class);
 
-		injectHandler.injectInstance(PlaneServicePrototype.class);
+		injectHandler.injectInstanceByContructor(PlaneServicePrototype.class);
 		Object planeService2 = injectHandler.getInjectionInstance(PlaneService.class);
 
 		Assertions.assertNotEquals(planeService1, planeService2);
